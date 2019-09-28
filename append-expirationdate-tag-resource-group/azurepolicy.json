@@ -1,0 +1,53 @@
+{
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/addexpirationtagresourcegroup",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "addexpirationtagresourcegroup",
+  "properties": {
+    "displayName": "Append datetime (utc) tag when resource group will be terminated",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "Appends the a creationd date/time tag and adds x days when the resource group should be terminated. Does not modify the tags of resource groups created before this policy was applied until those resource groups are changed.",
+    "metadata": {
+      "category": "Tags"
+    },
+    "parameters": {
+      "tagName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name",
+          "description": "Name of the tag, such as 'created'"
+        }
+      },
+      "days": {
+        "type": "Integer",
+        "metadata": {
+          "displayName": "Days",
+          "description": "Now()+Days when the resource group should be terminated"
+        }
+      }
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
+            "exists": "false"
+          }
+        ]
+      },
+      "then": {
+        "effect": "append",
+        "details": [
+          {
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
+            "value": "[addDays(utcNow(), parameters('days'))]"
+          }
+        ]
+      }
+    }
+  }
+}
