@@ -15,7 +15,7 @@
         "type": "String",
         "metadata": {
           "displayName": "Tag Name",
-          "description": "Name of the tag, such as 'environment'"
+          "description": "Name of the tag, such as 'created'"
         }
       },
     "policyRule": {
