@@ -1,0 +1,46 @@
+{
+  "id": "/providers/Microsoft.Authorization/policyDefinitions/addcreatedtag",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "name": "addcreatedtag",
+  "properties": {
+    "displayName": "Append datetime (utc) tag when resource group is created",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "Appends the a creationd date tag and the time (utc) when the resource group was created. Does not modify the tags of resource groups created before this policy was applied until those resource groups are changed.",
+    "metadata": {
+      "category": "Tags"
+    },
+    "parameters": {
+      "tagName": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Tag Name",
+          "description": "Name of the tag, such as 'created'"
+        }
+      },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+          },
+          {
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
+            "exists": "false"
+          }
+        ]
+      },
+      "then": {
+        "effect": "append",
+        "details": [
+          {
+            "field": "[concat('tags[', parameters('tagName'), ']')]",
+            "value": "[utcNow()]"
+          }
+        ]
+      }
+    }
+  }
+}
+}
