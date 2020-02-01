@@ -18,7 +18,6 @@
         "description": "Value of the tag to audit against (i.e. Prod/UAT/TEST, 12345, etc.)"
       }
     }
-  }
   },
   "policyRule": {
     "if": {
