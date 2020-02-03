@@ -1,6 +1,6 @@
 # Audit and deploy Resource Locks on Resource Groups based on Tags
 
-Deploy Resource Locks CanNotDelete to Resource Groups that have a specific Tag, for the CanNotDelete Resource Lock.
+Deploy Resource Locks CanNotDelete to Resource Groups that have a specific Tag.
 Within this Policy, you sepcify the Tag Name and Tag Value that will be used for identifying the Resource Groups to audit and deploy to.
 
 ## Try in the Azure Portal
